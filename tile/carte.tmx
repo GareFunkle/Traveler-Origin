@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="159" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="46">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="159" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="49">
  <editorsettings>
   <export target="carte.csv" format="csv"/>
  </editorsettings>
@@ -175,7 +175,6 @@
   <object id="17" type="sol" x="4559" y="320.439" width="529.5" height="20"/>
   <object id="18" type="collision" x="0" y="0" width="3" height="705"/>
   <object id="19" name="sol" type="collision" x="5085" y="0" width="2" height="702.5"/>
-  <object id="20" x="5228" y="-724"/>
   <object id="29" type="sol" x="6.15243" y="353.239" width="650.619" height="15.7511"/>
   <object id="30" type="sol" x="783.766" y="351.236" width="734.446" height="10.7667"/>
   <object id="36" type="sol" x="2160.83" y="351.852" width="2382.4" height="11.4264"/>
@@ -186,5 +185,9 @@
   <object id="43" type="sol" x="1621.2" y="193.265" width="443.024" height="21.5565"/>
   <object id="44" type="sol" x="448.35" y="224.509" width="211.813" height="7.34999"/>
   <object id="45" type="sol" x="786.449" y="225.177" width="187.091" height="6.68181"/>
+  <object id="47" name="spawn_carte1" x="4939.33" y="175.333">
+   <point/>
+  </object>
+  <object id="48" name="enter_carte2" x="5052" y="188.667" width="30" height="128"/>
  </objectgroup>
 </map>
