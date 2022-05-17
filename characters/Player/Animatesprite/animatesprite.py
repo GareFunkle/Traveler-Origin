@@ -2,7 +2,7 @@ import pygame
 from Data.Support_Animation.support import import_folder
 
 
-class Player_Sprite(pygame.sprite.Sprite):
+class Animate_Sprite(pygame.sprite.Sprite):
 
     def __init__(self, x, y, name):
         super().__init__()

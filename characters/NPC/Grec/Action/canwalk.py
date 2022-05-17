@@ -1,5 +1,3 @@
-
-
 class CanWalk:
     # Must be attached to unit
     def __init__(self, speed_walk=3, speed_run=5):
