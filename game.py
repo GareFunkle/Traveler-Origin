@@ -42,6 +42,8 @@ class Game:
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = "attack"
             self.player.sprite.animation_speed = 0.23
+        if self.pressed.get(pygame.K_LCTRL):
+            self.player.launch_projectile()
 
     def update(self):
         self.map_manager.update()

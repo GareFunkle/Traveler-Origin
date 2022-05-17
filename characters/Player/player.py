@@ -1,3 +1,4 @@
+from characters.Player.Action.projectil import Projectile
 from characters.Player.Animatesprite.animatesprite import Animate_Sprite
 from characters.Player.Action.canwalk import CanWalk
 from lib.units.unit import Unit
@@ -5,7 +6,7 @@ from characters.Player.Action.canjump import CanJump
 from characters.Player.Action.canattack import CanAttack
 
 
-class Player(Unit, CanWalk, CanJump, CanAttack):
+class Player(Unit, CanWalk, CanJump, CanAttack, Projectile):
     def __init__(self):
         Unit.__init__(self, Animate_Sprite(0, 0, 'PLAYER'),
                       current_health=100, max_health=100)
@@ -21,3 +22,4 @@ class Player(Unit, CanWalk, CanJump, CanAttack):
             to_jump=False,
         )
         CanAttack.__init__(self, attack_damage=3)
+        Projectile.__init__(self, velocity=3)
