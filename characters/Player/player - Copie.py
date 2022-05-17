@@ -7,7 +7,7 @@ from characters.Player.Action.canattack import CanAttack
 
 class Player(Unit, CanWalk, CanJump, CanAttack):
     def __init__(self):
-        Unit.__init__(self, Player_Sprite(0, 0, 'PLAYER'),
+        Unit.__init__(self, Player_Sprite(0, 0),
                       current_health=100, max_health=100)
 
         CanWalk.__init__(self, self.rect, speed_walk=3, speed_run=5)

@@ -4,9 +4,8 @@ from Data.Support_Animation.support import import_folder
 
 class Player_Sprite(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, name):
+    def __init__(self, x, y):
         super().__init__()
-        self.character_path = f'assets/{name}/'
         self.import_character_assets()
         self.frame_index = 0
         self.animation_speed = 0.25
@@ -44,12 +43,12 @@ class Player_Sprite(pygame.sprite.Sprite):
         return image
 
     def import_character_assets(self):
-        self.character_path
+        character_path = 'assets/PLAYER/'
         self.animations = {'idle': [], 'run': [],
                            'jump': [], 'attack': [], 'dead': []}
 
         for animation in self.animations.keys():
-            full_path = self.character_path + animation
+            full_path = character_path + animation
             self.animations[animation] = import_folder(full_path)
 
     def animate(self):

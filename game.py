@@ -12,9 +12,7 @@ class Game:
         # creation de la fenetre du jeu
         # self.screen = pygame.display.set_mode((settings.DISPLAY_X, settings.DISPLAY_Y))
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        
 
-        
         pygame.display.set_caption(data.GAME_NAME)
 
         # generer un joueur
@@ -37,7 +35,10 @@ class Game:
         if self.pressed.get(pygame.K_UP):
             self.player.to_jump = True
             self.player.number_jump += 1
-
+        if self.pressed.get(pygame.K_RIGHT) and self.pressed.get(pygame.K_LSHIFT):
+            self.player.run_right()
+        if self.pressed.get(pygame.K_LEFT) and self.pressed.get(pygame.K_LSHIFT):
+            self.player.run_left()
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = "attack"
             self.player.sprite.animation_speed = 0.23
@@ -48,12 +49,11 @@ class Game:
 # boucle du jeu
     def run(self):
         clock = pygame.time.Clock()
-        # self.map_manager.get_group().update()
-        
+
         self.running = True
 
         while self.running:
-            
+
             self.player.sprite.save_location()
             self.move()
             self.update()
@@ -63,7 +63,7 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.running = False
                     pygame.quit()
 
                 if event.type == pygame.KEYDOWN:
