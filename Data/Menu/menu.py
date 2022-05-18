@@ -103,6 +103,8 @@ class Menu:
                     if self.play_button_rect.collidepoint(event.pos):
                 # mettre le jeu en mode lancer
                         self.game.start()
+                    if self.restart_button_rect.collidepoint(event.pos):
+                        self.game.restart_game()
                     
                     if self.quit_button_rect.collidepoint(event.pos):
                         self.running = False

@@ -36,7 +36,6 @@ class MapManager:
         self.gravity = (0, 10)
         self.resistance = (0, 0)
         self.collision_sol = False
-        self.kill = 10
 
         self.register_map("carte", portals=[
             Portal(from_world="carte", origin_point="enter_carte2",
@@ -76,7 +75,7 @@ class MapManager:
             self.player.move_jump()
 
         if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
-            self.player.damage(self.kill)
+            self.player.current_health = 0
             self.player.sprite.status = "dead"
             self.player.sprite.animation_speed = 0.10
 
@@ -129,7 +128,7 @@ class MapManager:
 
         # dessiner ke groupe de calques
         group = pyscroll.PyscrollGroup(
-            map_layer=map_layer, default_layer=3)
+            map_layer=map_layer, default_layer=4)
         group.add(self.player.sprite)
 
         # creer un objet map

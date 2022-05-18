@@ -18,13 +18,28 @@ class Game:
 
         self.pressed = {}
 
+    def player_dead(self):
+        if self.player.current_health == 0:
+            self.game_over()
+
     def start(self):
         self.is_playing = True
+        
+    def restart_game(self):
+        self.is_playing = False  
+        self.map_manager.update()
+        self.map_manager.teleport_player("player")
+        self.player.sprite.status = 'idle'
+        self.player.current_health = self.player.max_health      
 
     def game_over(self):
         # remettre le jeu a neuf, retirer les mponstre remmetre le joueur a 100 point de vie , jeu en attente
+        self.map_manager.update()
+        self.map_manager.teleport_player("player")
+        self.player.sprite.status = 'idle'
         self.player.current_health = self.player.max_health
         self.is_playing = False
+        
 
     def move(self):
         if self.pressed.get(pygame.K_ESCAPE):
@@ -53,6 +68,8 @@ class Game:
         self.map_manager.draw()
         self.player.sprite.animate()
         self.player.update_health_bar(self.screen)
+        self.player_dead()
+
 
 
 
