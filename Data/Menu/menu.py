@@ -32,21 +32,28 @@ class Menu:
         self.play_button = pygame.transform.scale(self.play_button, (150, 50))
         self.play_button_rect = self.play_button.get_rect()
         self.play_button_rect.x = math.ceil(self.screen.get_width() / 2.25)
-        self.play_button_rect.y = math.ceil(self.screen.get_height() / 1.50)
+        self.play_button_rect.y = math.ceil(self.screen.get_height() / 1.60)
+
+        # importer le bouton rejouer
+        self.restart_button = pygame.image.load('assets/Menu/restart_button.png')
+        self.restart_button = pygame.transform.scale(self.restart_button, (150, 50))
+        self.restart_button_rect = self.restart_button.get_rect()
+        self.restart_button_rect.x = math.ceil(self.screen.get_width() / 2.25)
+        self.restart_button_rect.y = math.ceil(self.screen.get_height() / 1.40)
 
         # importer le bouton parametre
         self.setting_button = pygame.image.load('assets/Menu/setting_button.png')
         self.setting_button = pygame.transform.scale(self.setting_button, (150, 50))
         self.setting_button_rect = self.setting_button.get_rect()
         self.setting_button_rect.x = math.ceil(self.screen.get_width() / 2.25)
-        self.setting_button_rect.y = math.ceil(self.screen.get_height() / 1.30)
+        self.setting_button_rect.y = math.ceil(self.screen.get_height() / 1.23)
 
         # importer le bouton quitter le jeu 
         self.quit_button = pygame.image.load('assets/Menu/quit_button.png')
         self.quit_button = pygame.transform.scale(self.quit_button, (150, 50))
         self.quit_button_rect = self.quit_button.get_rect()
         self.quit_button_rect.x = math.ceil(self.screen.get_width() / 2.25)
-        self.quit_button_rect.y = math.ceil(self.screen.get_height() / 1.15)
+        self.quit_button_rect.y = math.ceil(self.screen.get_height() / 1.10)
     
         self.x_background = 0
 
@@ -73,6 +80,7 @@ class Menu:
                 # ajouter mon ecran de bienvenue
                 self.screen.blit(self.quit_button, self.quit_button_rect)
                 self.screen.blit(self.setting_button, self.setting_button_rect)
+                self.screen.blit(self.restart_button, self.restart_button_rect)
                 self.screen.blit(self.play_button, self.play_button_rect)        
                 self.screen.blit(self.banner, self.banner_rect)
             
@@ -95,7 +103,8 @@ class Menu:
                     if self.play_button_rect.collidepoint(event.pos):
                 # mettre le jeu en mode lancer
                         self.game.start()
+                    
                     if self.quit_button_rect.collidepoint(event.pos):
                         self.running = False
-                    
+
             clock.tick(settings.FPS)

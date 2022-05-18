@@ -22,6 +22,7 @@ class Map:
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list([Portal])
+    
 
 
 
