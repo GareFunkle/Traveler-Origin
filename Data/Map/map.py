@@ -18,9 +18,11 @@ class Map:
     name: str
     walls: list([pygame.Rect])
     ground: list([pygame.Rect])
+    spade: list([pygame.Rect])
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list([Portal])
+
 
 
 class MapManager:
@@ -33,6 +35,7 @@ class MapManager:
         self.gravity = (0, 10)
         self.resistance = (0, 0)
         self.collision_sol = False
+        self.kill = 10
 
         self.register_map("carte", portals=[
             Portal(from_world="carte", origin_point="enter_carte2",
@@ -70,6 +73,11 @@ class MapManager:
 
         if self.player.to_jump and self.collision_sol:
             self.player.move_jump()
+
+        if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
+            self.player.damage(self.kill)
+            self.player.sprite.status = "dead"
+            self.player.sprite.animation_speed = 0.10
 
     def draw_collision(self):
         for collision in self.get_ground():
@@ -112,13 +120,19 @@ class MapManager:
             if obj.type == "sol":
                 ground.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
+        spade = []
+
+        for obj in tmx_data.objects:
+            if obj.type == "kill":
+                spade.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
         # dessiner ke groupe de calques
         group = pyscroll.PyscrollGroup(
             map_layer=map_layer, default_layer=3)
         group.add(self.player.sprite)
 
         # creer un objet map
-        self.maps[name] = Map(name, walls, ground, group, tmx_data, portals)
+        self.maps[name] = Map(name, walls, ground, spade, group, tmx_data, portals)
 
     def get_map(self):
         return self.maps[self.current_map]
@@ -131,6 +145,9 @@ class MapManager:
 
     def get_ground(self):
         return self.get_map().ground
+    
+    def get_spade(self):
+        return self.get_map().spade
 
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)

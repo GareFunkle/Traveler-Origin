@@ -3,6 +3,9 @@ from pygame import surface
 from pygame.draw import rect
 
 
+
+
+
 class Unit:
     def __init__(self, sprite, current_health=100, max_health=100):
         self.sprite = sprite
@@ -13,23 +16,27 @@ class Unit:
 
 
 
+
     def damage(self, amount):
-        pass
         if self.current_health - amount > amount:
             self.current_health -= amount
 
 
+
     def update_health_bar(self, surface):
-        pass
         # dessiner la bar de vie
+        head = pygame.image.load('assets/head/head.png')
+
+        surface.blit(head, (10, 20))
+
         pygame.draw.rect(
             surface,
             (60, 63, 60),
-            [self.rect.x + 20, self.rect.y - 20, self.max_health, 7],
+            [80, 70, self.max_health, 10],
         )
         pygame.draw.rect(
             surface,
             (111, 210, 46),
-            [self.rect.x + 20, self.rect.y - 20, self.current_health, 7],
+            [80, 70, self.current_health, 10],
         )
 

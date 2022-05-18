@@ -18,12 +18,13 @@ class Game:
 
         self.pressed = {}
 
-    # def init_screen(width, height, mode):
-    #     screen = pygame.display.set_mode((int(width), int(height)), mode)
-    #     return screen
-
     def start(self):
         self.is_playing = True
+
+    def game_over(self):
+        # remettre le jeu a neuf, retirer les mponstre remmetre le joueur a 100 point de vie , jeu en attente
+        self.player.current_health = self.player.max_health
+        self.is_playing = False
 
     def move(self):
         if self.pressed.get(pygame.K_ESCAPE):
@@ -51,6 +52,9 @@ class Game:
         self.move()
         self.map_manager.draw()
         self.player.sprite.animate()
+        self.player.update_health_bar(self.screen)
+
+
 
 
 

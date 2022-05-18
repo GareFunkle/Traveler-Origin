@@ -14,8 +14,8 @@ class Projectile(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.all_projectiles = pygame.sprite.Group()
         self.rect = self.image.get_rect()
-        self.rect.x = self.sprite.position[0] + 120
-        self.rect.y = self.sprite.position[1] + 80
+        self.rect.x = self.rect.x + 120
+        self.rect.y = self.rect.y + 80
         self.origin_image = self.image
         self.angle = angle
 
@@ -52,4 +52,4 @@ class Projectile(pygame.sprite.Sprite):
         # creer une nouvel instance de la classe projectile
         self.all_projectiles.add(Projectile(self))
         # demarer l'animation
-        self.start_animation()
+        # self.start_animation()
