@@ -3,6 +3,7 @@ import pygame
 import pytmx
 import pyscroll
 from Data.Map.sol import Sol
+from characters.NPC.Grec.grec import Grec
 
 
 @dataclass
@@ -22,6 +23,7 @@ class Map:
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list([Portal])
+    npcs: list([Grec])
     
 
 
@@ -46,6 +48,7 @@ class MapManager:
                    target_world="carte", teleport_point="spawn_carte1")
         ])
         self.teleport_player("player")
+        self.teleport_npcs()
 
     def check_spade_collision(self):
         if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
@@ -68,12 +71,6 @@ class MapManager:
                 sprite.move_back()
             else:
                 self.resistance = (0, 0)
-
-        # for sprite in self.get_group().sprites():
-        #     if sprite.head.collidelist(self.get_walls()) > -1:
-        #         sprite.fall_back()
-        #         self.resistance = (0, 0)
-        #         self.player.jump_down
 
 
         if self.player.sprite.feet.collidelist(self.get_ground()) > -1:
@@ -108,7 +105,7 @@ class MapManager:
         self.player.sprite.position[1] = point.y
         self.player.sprite.save_location()
 
-    def register_map(self, name, portals=[]):
+    def register_map(self, name, portals=[], npcs=[]):
         # charger la carte
         tmx_data = pytmx.util_pygame.load_pygame(f"tile/{name}.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -139,9 +136,11 @@ class MapManager:
         group = pyscroll.PyscrollGroup(
             map_layer=map_layer, default_layer=3)
         group.add(self.player.sprite)
+        for npc in npcs:
+            group.add(npc)
 
         # creer un objet map
-        self.maps[name] = Map(name, walls, ground, spade, group, tmx_data, portals)
+        self.maps[name] = Map(name, walls, ground, spade, group, tmx_data, portals, npcs)
 
     def get_map(self):
         return self.maps[self.current_map]
@@ -160,6 +159,15 @@ class MapManager:
 
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)
+    
+    def teleport_npcs(self):
+        for map in self.maps:
+            map_data = self.maps[map]
+            npcs = map_data.npcs
+
+            for npc in npcs:
+                npc.load_points(map_data.tmx_data)
+                npc.teleport_spawn()
 
     def draw(self):
         self.get_group().draw(self.screen)
@@ -171,4 +179,5 @@ class MapManager:
         self.gravity_game()
         self.check_collision()
         self.check_spade_collision()
-        # self.move_jump()
+        for npc in self.get_map().npcs:
+            npc.move()
