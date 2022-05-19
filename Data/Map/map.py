@@ -111,6 +111,7 @@ class MapManager:
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size())
+        map_layer.zoom = 1.6
 
         # definir une liste qui va stocker mes collision
         walls = []
