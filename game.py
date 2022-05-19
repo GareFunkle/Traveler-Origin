@@ -46,14 +46,25 @@ class Game:
             self.is_playing = False
         if self.pressed.get(pygame.K_RIGHT):
             self.player.move_right()
+        if self.pressed.get(pygame.K_d):
+            self.player.move_right()
         if self.pressed.get(pygame.K_LEFT):
             self.player.move_left()
-        if self.pressed.get(pygame.K_UP):
+        if self.pressed.get(pygame.K_q):
+            self.player.move_left()
+        if self.pressed.get(pygame.K_UP) and self.player.sprite.position[1] > 0:
+            self.player.to_jump = True
+            self.player.number_jump += 1
+        if self.pressed.get(pygame.K_z) and self.player.sprite.position[1] > 0:
             self.player.to_jump = True
             self.player.number_jump += 1
         if self.pressed.get(pygame.K_RIGHT) and self.pressed.get(pygame.K_LSHIFT):
             self.player.run_right()
         if self.pressed.get(pygame.K_LEFT) and self.pressed.get(pygame.K_LSHIFT):
+            self.player.run_left()
+        if self.pressed.get(pygame.K_d) and self.pressed.get(pygame.K_LSHIFT):
+            self.player.run_right()
+        if self.pressed.get(pygame.K_q) and self.pressed.get(pygame.K_LSHIFT):
             self.player.run_left()
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = "attack"

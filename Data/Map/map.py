@@ -47,6 +47,10 @@ class MapManager:
         ])
         self.teleport_player("player")
 
+    def check_spade_collision(self):
+        if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
+            self.player.is_dead()
+
     # verification des types de collision en provenance de tiled
     def check_collision(self):
         for portal in self.get_map().portals:
@@ -65,34 +69,39 @@ class MapManager:
             else:
                 self.resistance = (0, 0)
 
+        # for sprite in self.get_group().sprites():
+        #     if sprite.head.collidelist(self.get_walls()) > -1:
+        #         sprite.fall_back()
+        #         self.resistance = (0, 0)
+        #         self.player.jump_down
+
+
         if self.player.sprite.feet.collidelist(self.get_ground()) > -1:
             self.resistance = (0, -10)
             self.collision_sol = True
+            self.player.number_jump = 0
         else:
             self.resistance = (0, 0)
 
         if self.player.to_jump and self.collision_sol:
-            self.player.move_jump()
+            if self.player.number_jump < 10:
+                self.player.move_jump()
 
-        if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
-            self.player.current_health = 0
-            self.player.sprite.status = "dead"
-            self.player.sprite.animation_speed = 0.10
+
 
     def draw_collision(self):
-        for collision in self.get_ground():
-            pygame.draw.rect(self.screen, (64, 64, 64, 0), collision)
+        # for collision in self.get_ground():
+        #     pygame.draw.rect(self.screen, (64, 64, 64, 0), collision)
+        if self.player.sprite.feet:
+            pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.sprite.feet)
+        # if self.player.sprite.head:
+        #     pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.sprite.head)
 
-    # def move_jump(self):
-    #     if self.player.to_jump and self.collision_sol:
-    #         if self.player.number_jump > 2:
-    #             self.player.move_jump()
-
+    #Gravite
     def gravity_game(self):
         self.player.sprite.position[1] += self.gravity[1] + self.resistance[1]
 
     # positionne mon joueur a la position choisie sur tiled
-
     def teleport_player(self, name):
         point = self.get_object(name)
         self.player.sprite.position[0] = point.x
@@ -128,7 +137,7 @@ class MapManager:
 
         # dessiner ke groupe de calques
         group = pyscroll.PyscrollGroup(
-            map_layer=map_layer, default_layer=4)
+            map_layer=map_layer, default_layer=3)
         group.add(self.player.sprite)
 
         # creer un objet map
@@ -155,10 +164,11 @@ class MapManager:
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.sprite.rect.center)
-        # self.draw_collision()
+        self.draw_collision()
 
     def update(self):
         self.get_group().update()
         self.gravity_game()
         self.check_collision()
+        self.check_spade_collision()
         # self.move_jump()

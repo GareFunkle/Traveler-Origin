@@ -21,8 +21,10 @@ class Animate_Sprite(pygame.sprite.Sprite):
         self.on_right = False
         self.position = [x, y]
         self.image.set_colorkey([0, 0, 0])
-        self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 30)
+        self.feet = pygame.Rect(0, 0, self.rect.width * 0.4, 12)
+        # self.head = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
         self.old_position = self.position.copy()
+
 
     # sauvegarde la position de mon joueur
     def save_location(self):
@@ -31,6 +33,14 @@ class Animate_Sprite(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+        # self.head.midtop = self.rect.midtop
+
+
+    def fall_back(self):
+        self.position = self.old_position
+        self.rect.topleft = self.position.copy()
+        self.head.midtop = self.rect.midtop
+        self.update()
 
     def move_back(self):
         self.position = self.old_position

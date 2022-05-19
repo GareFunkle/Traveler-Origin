@@ -18,13 +18,13 @@ class Menu:
         
                 # importer de charger l'arriere plan
         self.background = pygame.image.load('assets/Menu/bg.jpg')
-        # self.background = pygame.transform.scale(self.background, (1280, 720))
+        # self.background = pygame.transform.scale(self.background, (5120, 1080))
 
         # importer ou charger notre banniere 
         self.banner = pygame.image.load('assets/Menu/banner.png')
-        self.banner = pygame.transform.scale(self.banner, (650, 500))
+        self.banner = pygame.transform.scale(self.banner, (550, 450))
         self.banner_rect = self.banner.get_rect()
-        self.banner_rect.x = math.ceil(self.screen.get_width() / 4)
+        self.banner_rect.x = math.ceil(self.screen.get_width() / 3.60)
         self.banner_rect.y = math.ceil(self.screen.get_height() / -100)
         
         # import chatger notre bouton pour lancer la partie 

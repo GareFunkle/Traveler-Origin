@@ -21,6 +21,11 @@ class Unit:
         if self.current_health - amount > amount:
             self.current_health -= amount
 
+    def is_dead(self):
+        self.current_health = 0
+        self.sprite.status = "dead"
+        self.sprite.animation_speed = 0.10
+
 
 
     def update_health_bar(self, surface):

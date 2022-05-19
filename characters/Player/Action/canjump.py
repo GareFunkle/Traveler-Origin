@@ -12,7 +12,7 @@ class CanJump:
 
     def move_jump(self):
         if self.to_jump:
-            if self.jump_high >= 7:
+            if self.jump_high >= 8:
                 self.jump_down -= 1
                 self.jump = self.jump_down
                 self.sprite.status = 'jump'
@@ -30,3 +30,6 @@ class CanJump:
                 self.to_jump = False
                 self.sprite.status = 'idle'
         self.sprite.position[1] = self.sprite.position[1] - (10 * (self.jump / 2))
+
+    def collision_top_screen(self):
+        self.sprite.position[1] > 0
