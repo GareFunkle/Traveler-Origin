@@ -2,8 +2,6 @@ from dataclasses import dataclass
 import pygame
 import pytmx
 import pyscroll
-from Data.Map.sol import Sol
-from characters.NPC.Grec.grec import Grec
 from characters.entity import NPC
 
 

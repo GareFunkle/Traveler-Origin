@@ -154,7 +154,7 @@ class NPC(Entity):
         if current_rect.x > target_rect.x and abs(current_rect.y - target_rect.y) < 3:
             self.move_left()
             self.animate()
-        elif current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
+        if current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
             self.move_right()
             self.animate()
 
