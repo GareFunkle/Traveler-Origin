@@ -1,7 +1,7 @@
 from turtle import screensize
 import pygame
-from characters.Player.player import Player
 from Data.Map.map import MapManager
+from characters.entity import NPC, Entity, Player
 
 
 
@@ -29,14 +29,14 @@ class Game:
         self.is_playing = False  
         self.map_manager.update()
         self.map_manager.teleport_player("player")
-        self.player.sprite.status = 'idle'
+        self.player.status = 'idle'
         self.player.current_health = self.player.max_health      
 
     def game_over(self):
         # remettre le jeu a neuf, retirer les mponstre remmetre le joueur a 100 point de vie , jeu en attente
         self.map_manager.update()
         self.map_manager.teleport_player("player")
-        self.player.sprite.status = 'idle'
+        self.player.status = 'idle'
         self.player.current_health = self.player.max_health
         self.is_playing = False
         
@@ -52,10 +52,10 @@ class Game:
             self.player.move_left()
         if self.pressed.get(pygame.K_q):
             self.player.move_left()
-        if self.pressed.get(pygame.K_UP) and self.player.sprite.position[1] > 0:
+        if self.pressed.get(pygame.K_UP) and self.player.position[1] > 0:
             self.player.to_jump = True
             self.player.number_jump += 1
-        if self.pressed.get(pygame.K_z) and self.player.sprite.position[1] > 0:
+        if self.pressed.get(pygame.K_z) and self.player.position[1] > 0:
             self.player.to_jump = True
             self.player.number_jump += 1
         if self.pressed.get(pygame.K_RIGHT) and self.pressed.get(pygame.K_LSHIFT):
@@ -67,17 +67,18 @@ class Game:
         if self.pressed.get(pygame.K_q) and self.pressed.get(pygame.K_LSHIFT):
             self.player.run_left()
         if self.pressed.get(pygame.K_SPACE):
-            self.player.sprite.status = "attack"
-            self.player.sprite.animation_speed = 0.23
+            self.player.status = "attack"
+            self.player.animation_speed = 0.23
         if self.pressed.get(pygame.K_LCTRL):
             self.player.launch_projectile()
 
     def update(self):
         self.map_manager.update()
-        self.player.sprite.save_location()
+        self.player.save_location()
         self.move()
         self.map_manager.draw()
-        self.player.sprite.animate()
+        self.player.animate()
+        # self.npcs.animate()
         self.player.update_health_bar(self.screen)
         self.player_dead()
 

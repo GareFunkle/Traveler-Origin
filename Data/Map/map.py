@@ -4,6 +4,7 @@ import pytmx
 import pyscroll
 from Data.Map.sol import Sol
 from characters.NPC.Grec.grec import Grec
+from characters.entity import NPC
 
 
 @dataclass
@@ -23,7 +24,7 @@ class Map:
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list([Portal])
-    npcs: list([Grec])
+    npcs: list([NPC])
     
 
 
@@ -42,6 +43,8 @@ class MapManager:
         self.register_map("carte", portals=[
             Portal(from_world="carte", origin_point="enter_carte2",
                    target_world="carte2", teleport_point="spawn_carte2")
+        ], npcs=[
+            NPC("grec", nb_points=2)
         ])
         self.register_map("carte2", portals=[
             Portal(from_world="carte2", origin_point="enter_carte1",
@@ -51,7 +54,7 @@ class MapManager:
         self.teleport_npcs()
 
     def check_spade_collision(self):
-        if self.player.sprite.feet.collidelist(self.get_spade()) > -1:
+        if self.player.feet.collidelist(self.get_spade()) > -1:
             self.player.is_dead()
 
     # verification des types de collision en provenance de tiled
@@ -61,7 +64,7 @@ class MapManager:
                 point = self.get_object(portal.origin_point)
                 rect = pygame.Rect(point.x, point.y, point.width, point.height)
 
-                if self.player.sprite.feet.colliderect(rect):
+                if self.player.feet.colliderect(rect):
                     copy_portal = portal
                     self.current_map = portal.target_world
                     self.teleport_player(copy_portal.teleport_point)
@@ -73,7 +76,7 @@ class MapManager:
                 self.resistance = (0, 0)
 
 
-        if self.player.sprite.feet.collidelist(self.get_ground()) > -1:
+        if self.player.feet.collidelist(self.get_ground()) > -1:
             self.resistance = (0, -10)
             self.collision_sol = True
             self.player.number_jump = 0
@@ -89,21 +92,21 @@ class MapManager:
     def draw_collision(self):
         # for collision in self.get_ground():
         #     pygame.draw.rect(self.screen, (64, 64, 64, 0), collision)
-        if self.player.sprite.feet:
-            pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.sprite.feet)
+        if self.player.feet:
+            pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.feet)
         # if self.player.sprite.head:
         #     pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.sprite.head)
 
     #Gravite
     def gravity_game(self):
-        self.player.sprite.position[1] += self.gravity[1] + self.resistance[1]
+        self.player.position[1] += self.gravity[1] + self.resistance[1]
 
     # positionne mon joueur a la position choisie sur tiled
     def teleport_player(self, name):
         point = self.get_object(name)
-        self.player.sprite.position[0] = point.x
-        self.player.sprite.position[1] = point.y
-        self.player.sprite.save_location()
+        self.player.position[0] = point.x
+        self.player.position[1] = point.y
+        self.player.save_location()
 
     def register_map(self, name, portals=[], npcs=[]):
         # charger la carte
@@ -111,6 +114,7 @@ class MapManager:
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size())
+        map_layer.zoom = 1.2
 
         # definir une liste qui va stocker mes collision
         walls = []
@@ -135,7 +139,7 @@ class MapManager:
         # dessiner ke groupe de calques
         group = pyscroll.PyscrollGroup(
             map_layer=map_layer, default_layer=3)
-        group.add(self.player.sprite)
+        group.add(self.player)
         for npc in npcs:
             group.add(npc)
 
@@ -171,8 +175,8 @@ class MapManager:
 
     def draw(self):
         self.get_group().draw(self.screen)
-        self.get_group().center(self.player.sprite.rect.center)
-        self.draw_collision()
+        self.get_group().center(self.player.rect.center)
+        # self.draw_collision()
 
     def update(self):
         self.get_group().update()

@@ -4,7 +4,7 @@ from Data.Support_Animation.support import import_folder
 
 class Animate_Sprite(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, name):
+    def __init__(self, name):
         super().__init__()
         self.character_path = f'assets/{name}/'
         self.import_character_assets()
@@ -19,39 +19,15 @@ class Animate_Sprite(pygame.sprite.Sprite):
         self.on_ceiling = False
         self.on_left = False
         self.on_right = False
-        self.position = [x, y]
         self.image.set_colorkey([0, 0, 0])
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.4, 12)
         # self.head = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
-        self.old_position = self.position.copy()
 
 
-    # sauvegarde la position de mon joueur
-    def save_location(self):
-        self.old_position = self.position.copy()
-
-    def update(self):
-        self.rect.topleft = self.position
-        self.feet.midbottom = self.rect.midbottom
-        # self.head.midtop = self.rect.midtop
-
-
-    def fall_back(self):
-        self.position = self.old_position
-        self.rect.topleft = self.position.copy()
-        self.head.midtop = self.rect.midtop
-        self.update()
-
-    def move_back(self):
-        self.position = self.old_position
-        self.rect.topleft = self.position.copy()
-        self.feet.midbottom = self.rect.midbottom
-        self.update()
-
-    def get_image(self, x, y):
-        image = pygame.Surface([138, 138])
-        image.blit(self.sprite, (0, 0), (x, y, 138, 138))
-        return image
+    # def get_image(self, x, y):
+    #     image = pygame.Surface([138, 138])
+    #     image.blit(self.sprite, (0, 0), (x, y, 138, 138))
+    #     return image
 
     def import_character_assets(self):
         self.character_path

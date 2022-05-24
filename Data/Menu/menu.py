@@ -95,7 +95,7 @@ class Menu:
                     self.game.pressed[event.key] = True
 
                 elif event.type == pygame.KEYUP:
-                    self.game.player.sprite.status = 'idle'
+                    self.game.player.status = 'idle'
                     self.game.pressed[event.key] = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:

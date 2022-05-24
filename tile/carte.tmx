@@ -218,7 +218,7 @@
   <object id="48" name="enter_carte2" x="5046.67" y="157.334" width="35.3333" height="166.667"/>
   <object id="51" type="kill" x="659" y="634.333" width="124.667" height="52.3333"/>
   <object id="59" type="sol" x="1517" y="350" width="643" height="32"/>
-  <object id="60" name="grec_path1" x="2400" y="320" width="32" height="31.3333"/>
-  <object id="63" name="grec_path2" x="2528.33" y="319.667" width="31.3333" height="32.3333"/>
+  <object id="60" name="grec_path1" x="2400" y="228" width="32" height="31.3333"/>
+  <object id="63" name="grec_path2" x="2911.83" y="227.167" width="31.3333" height="32.3333"/>
  </objectgroup>
 </map>
