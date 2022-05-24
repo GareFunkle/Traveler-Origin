@@ -1,8 +1,6 @@
-from turtle import screensize
 import pygame
 from Data.Map.map import MapManager
-from characters.entity import NPC, Entity, Player
-
+from characters.entity import Player
 
 
 class Game:

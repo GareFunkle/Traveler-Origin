@@ -1,3 +1,4 @@
+import random
 import pygame
 
 from characters.Player.Animatesprite.animatesprite import Animate_Sprite
@@ -109,7 +110,7 @@ class Player(Entity):
     def update_health_bar(self, surface):
         # dessiner la bar de vie
         head = pygame.image.load('assets/head/head.png')
-
+        # head.set_colorkey([0, 0, 0])
         surface.blit(head, (10, 20))
 
         pygame.draw.rect(
@@ -132,7 +133,7 @@ class NPC(Entity):
         # self.dialog = dialog
         self.points = []
         self.name = name
-        self.speed_walk = 2
+        self.speed_walk = random.randint(1, 3)
         self.current_point = 0
 
     def teleport_spawn(self):
@@ -157,6 +158,7 @@ class NPC(Entity):
         if current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
             self.move_right()
             self.animate()
+            
 
         if self.rect.colliderect(target_rect):
             self.current_point = target_point

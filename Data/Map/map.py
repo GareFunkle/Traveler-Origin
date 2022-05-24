@@ -42,7 +42,8 @@ class MapManager:
             Portal(from_world="carte", origin_point="enter_carte2",
                    target_world="carte2", teleport_point="spawn_carte2")
         ], npcs=[
-            NPC("grec", nb_points=2)
+            NPC("grec", nb_points=2),
+            NPC("greclance", nb_points=2)
         ])
         self.register_map("carte2", portals=[
             Portal(from_world="carte2", origin_point="enter_carte1",
