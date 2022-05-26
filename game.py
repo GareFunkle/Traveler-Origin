@@ -66,9 +66,10 @@ class Game:
             self.player.run_left()
         if self.pressed.get(pygame.K_SPACE):
             self.player.status = "attack"
-            self.player.animation_speed = 0.23
-        if self.pressed.get(pygame.K_LCTRL):
             self.player.launch_projectile()
+            self.player.animation_speed = 0.23
+        # if self.pressed.get(pygame.K_LCTRL):
+        #     self.player.launch_projectile()
 
     def update(self):
         self.map_manager.update()
@@ -76,7 +77,6 @@ class Game:
         self.move()
         self.map_manager.draw()
         self.player.animate()
-        # self.npcs.animate()
         self.player.update_health_bar(self.screen)
         self.player_dead()
 

@@ -2,6 +2,7 @@ import random
 import pygame
 
 from characters.Player.Animatesprite.animatesprite import Animate_Sprite
+from projectile import Projectile
 
 
 class Entity(Animate_Sprite):
@@ -13,7 +14,7 @@ class Entity(Animate_Sprite):
         self.position = [x, y]
         self.speed_walk = 3
         self.speed_run = 5
-
+        self.all_projectiles = pygame.sprite.Group()
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
         self.old_position = self.position.copy()
         self.jump = 0
@@ -29,13 +30,32 @@ class Entity(Animate_Sprite):
 
     def save_location(self): self.old_position = self.position.copy()
 
+    def launch_projectile(self):
+        # creer une nouvel instance de la classe projectile
+        self.all_projectiles.add(Projectile(self))
+        # demarer l'animation
+
     def move_right(self):
         self.facing_right = True
         self.position[0] += self.speed_walk
         self.status = 'run'
         self.animation_speed = 0.25
 
+    
     def move_left(self):
+        self.facing_right = False
+        self.position[0] -= self.speed_walk 
+        # self.moves()
+        self.status = 'run'
+        self.animation_speed = 0.25
+
+    def move_right_npc(self):
+        self.facing_right = True
+        self.position[0] += self.speed_walk
+        self.status = 'run'
+        self.animation_speed = 0.25
+
+    def move_left_npc(self):
         self.facing_right = False
         self.position[0] -= self.speed_walk 
         # self.moves()
@@ -153,10 +173,10 @@ class NPC(Entity):
         target_rect = self.points[target_point]
 
         if current_rect.x > target_rect.x and abs(current_rect.y - target_rect.y) < 3:
-            self.move_left()
+            self.move_left_npc()
             self.animate()
         if current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
-            self.move_right()
+            self.move_right_npc()
             self.animate()
             
 

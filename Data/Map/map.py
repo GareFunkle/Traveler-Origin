@@ -69,6 +69,14 @@ class MapManager:
                     self.teleport_player(copy_portal.teleport_point)
 
         for sprite in self.get_group().sprites():
+
+            if type(sprite) is NPC:
+                if sprite.feet.colliderect(self.player.rect):
+                    sprite.speed_walk = 0
+                else:
+                    sprite.speed_walk= 1
+
+        for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
             else:
