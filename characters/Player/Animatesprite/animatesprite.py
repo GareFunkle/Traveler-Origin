@@ -31,8 +31,8 @@ class Animate_Sprite(pygame.sprite.Sprite):
 
     def import_character_assets(self):
         self.character_path
-        self.animations = {'idle': [], 'run': [],
-                           'jump': [], 'attack': [], 'dead': []}
+        self.animations = {'idle': [], 'run': [], 'roll': [],
+                           'jump': [], 'fall': [], 'attack': [], 'spattack': [], 'dead': []}
 
         for animation in self.animations.keys():
             full_path = self.character_path + animation

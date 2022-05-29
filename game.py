@@ -1,6 +1,6 @@
 import pygame
 from Data.Map.map import MapManager
-from characters.entity import Player
+from characters.entity import NPC, Player
 
 
 class Game:
@@ -9,6 +9,7 @@ class Game:
         self.is_playing = False
         # creation de la fenetre du jeu
         self.screen = screen
+        self.font = pygame.font.Font('freesansbold.ttf', 55)
 
         # generer un joueur
         self.player = Player()
@@ -18,7 +19,7 @@ class Game:
 
     def player_dead(self):
         if self.player.current_health == 0:
-            self.game_over()
+            self.game_over_text()
 
     def start(self):
         self.is_playing = True
@@ -28,7 +29,11 @@ class Game:
         self.map_manager.update()
         self.map_manager.teleport_player("player")
         self.player.status = 'idle'
-        self.player.current_health = self.player.max_health      
+        self.player.current_health = self.player.max_health
+
+    def game_over_text(self):
+        over_text = self.font.render("GAME OVER", True, (64, 64, 64))
+        self.screen.blit(over_text, (580, 200))
 
     def game_over(self):
         # remettre le jeu a neuf, retirer les mponstre remmetre le joueur a 100 point de vie , jeu en attente
@@ -65,11 +70,10 @@ class Game:
         if self.pressed.get(pygame.K_q) and self.pressed.get(pygame.K_LSHIFT):
             self.player.run_left()
         if self.pressed.get(pygame.K_SPACE):
-            self.player.status = "attack"
-            self.player.launch_projectile()
+            self.player.attack()
             self.player.animation_speed = 0.23
         # if self.pressed.get(pygame.K_LCTRL):
-        #     self.player.launch_projectile()
+        #     self.player.status = "spattack"
 
     def update(self):
         self.map_manager.update()
@@ -77,7 +81,6 @@ class Game:
         self.move()
         self.map_manager.draw()
         self.player.animate()
-        self.player.update_health_bar(self.screen)
         self.player_dead()
 
 

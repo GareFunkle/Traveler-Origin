@@ -72,7 +72,8 @@ class MapManager:
 
             if type(sprite) is NPC:
                 if sprite.feet.colliderect(self.player.rect):
-                    sprite.speed_walk = 0
+                    sprite.attack_player()
+                    self.player.damage(sprite.attack)
                 else:
                     sprite.speed_walk= 1
 
@@ -182,8 +183,11 @@ class MapManager:
 
     def draw(self):
         self.get_group().draw(self.screen)
-        self.get_group().center(self.player.rect.center)
-        # self.draw_collision()
+        self.get_group().center(self.player.position)
+        self.player.update_health_bar(self.screen)
+        for npc in self.get_map().npcs:
+            npc.update_health_bar(self.screen)
+        self.draw_collision()
 
     def update(self):
         self.get_group().update()
@@ -191,4 +195,6 @@ class MapManager:
         self.check_collision()
         self.check_spade_collision()
         for npc in self.get_map().npcs:
+            npc.animate()
+            npc.status = 'idle'
             npc.move()
