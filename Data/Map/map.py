@@ -23,8 +23,6 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: list([Portal])
     npcs: list([NPC])
-    
-
 
 
 class MapManager:
@@ -75,14 +73,17 @@ class MapManager:
                     sprite.attack_player()
                     self.player.damage(sprite.attack)
                 else:
-                    sprite.speed_walk= 1
+                    sprite.speed_walk = 1
+                if self.player.feet.colliderect(sprite.rect):
+                    sprite.damage_for_npc(self.player.attack_npc)
+                if sprite.current_health == 0:
+                    sprite.status = 'dead'
 
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
             else:
                 self.resistance = (0, 0)
-
 
         if self.player.feet.collidelist(self.get_ground()) > -1:
             self.resistance = (0, -10)
@@ -95,8 +96,6 @@ class MapManager:
             if self.player.number_jump < 10:
                 self.player.move_jump()
 
-
-
     def draw_collision(self):
         # for collision in self.get_ground():
         #     pygame.draw.rect(self.screen, (64, 64, 64, 0), collision)
@@ -105,7 +104,7 @@ class MapManager:
         # if self.player.sprite.head:
         #     pygame.draw.rect(self.screen,  (64, 64, 64, 0), self.player.sprite.head)
 
-    #Gravite
+    # Gravite
     def gravity_game(self):
         self.player.position[1] += self.gravity[1] + self.resistance[1]
 
@@ -152,7 +151,8 @@ class MapManager:
             group.add(npc)
 
         # creer un objet map
-        self.maps[name] = Map(name, walls, ground, spade, group, tmx_data, portals, npcs)
+        self.maps[name] = Map(name, walls, ground, spade,
+                              group, tmx_data, portals, npcs)
 
     def get_map(self):
         return self.maps[self.current_map]
@@ -165,13 +165,13 @@ class MapManager:
 
     def get_ground(self):
         return self.get_map().ground
-    
+
     def get_spade(self):
         return self.get_map().spade
 
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)
-    
+
     def teleport_npcs(self):
         for map in self.maps:
             map_data = self.maps[map]
@@ -184,6 +184,7 @@ class MapManager:
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.position)
+        self.get_group().center(self.player.feet)
         self.player.update_health_bar(self.screen)
         for npc in self.get_map().npcs:
             npc.update_health_bar(self.screen)

@@ -164,9 +164,9 @@ class NPC(Entity):
     def update_health_bar(self, surface):
         # dessiner la barre de vie
         pygame.draw.rect(surface, (60, 63, 60), [
-                         self.position[0], self.position[1], self.max_health, 5])
-        pygame.draw.rect(surface, (111, 210, 46), [
-                         self.position[0], self.position[1], self.current_health, 5])
+                         100, self.position[1], self.max_health, 10])
+        pygame.draw.rect(surface, (220, 20, 60), [
+                         100, self.position[1], self.current_health, 10])
 
     def teleport_spawn(self):
         location = self.points[self.current_point]
@@ -193,12 +193,11 @@ class NPC(Entity):
         if self.rect.colliderect(target_rect):
             self.current_point = target_point
 
-    def damage(self, amount):
+    def damage_for_npc(self, amount):
         #infliger les degat
         self.current_health -= amount
 
     def is_dead(self):
-        self.current_health == 0
         self.status = "dead"
         self.animation_speed = 0.10
 
