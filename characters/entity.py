@@ -115,6 +115,7 @@ class Player(Entity):
         self.current_health == 0
         self.status = "dead"
         self.animation_speed = 0.10
+        
     
     def attack(self):
         self.status = 'attack'
