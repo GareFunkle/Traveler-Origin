@@ -19,7 +19,7 @@ class Game:
 
     def player_dead(self):
         if self.player.current_health == 0:
-            self.game_over_text()
+            self.game_over()
 
     def start(self):
         self.is_playing = True

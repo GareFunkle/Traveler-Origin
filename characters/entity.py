@@ -112,9 +112,10 @@ class Player(Entity):
         self.attack_npc = 5
 
     def is_dead(self):
-        self.current_health == 0
-        self.status = "dead"
-        self.animation_speed = 0.10
+        self.current_health = 0
+        if self.current_health == 0:
+            self.status = "dead" 
+            self.animation_speed = 0.10
         
     
     def attack(self):
@@ -125,6 +126,7 @@ class Player(Entity):
         if self.current_health - amount > amount:
             self.current_health -= amount
         else:
+            self.current_health = 0
             self.status = 'dead'
             
     def update_health_bar(self, surface):
