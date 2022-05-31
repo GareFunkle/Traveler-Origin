@@ -74,10 +74,10 @@ class MapManager:
                     self.player.damage(sprite.attack)
                 else:
                     sprite.speed_walk = 1
-                if self.player.feet.colliderect(sprite.rect):
-                    sprite.damage_for_npc(self.player.attack_npc)
-                if sprite.current_health == 0:
-                    sprite.status = 'dead'
+                # if self.player.feet.colliderect(sprite.rect):
+                #     sprite.damage_for_npc(self.player.attack_npc)
+                # if sprite.current_health == 0:
+                #     sprite.status = 'dead'
 
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
@@ -184,7 +184,6 @@ class MapManager:
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.position)
-        self.get_group().center(self.player.feet)
         self.player.update_health_bar(self.screen)
         for npc in self.get_map().npcs:
             npc.update_health_bar(self.screen)
